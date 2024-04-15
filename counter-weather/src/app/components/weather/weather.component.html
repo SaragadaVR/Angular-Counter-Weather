@@ -1,0 +1,88 @@
+<div class="container">
+    <div class="left-panel">
+      <mat-form-field appearance="fill" class="city-input">
+        <mat-label class="city-input-label">Type City Name</mat-label>
+        <input matInput type="text" placeholder="Type City Name" [(ngModel)]="cityName">
+      </mat-form-field>
+      <button mat-icon-button color="primary" class="add-button" (click)="addCity(cityName)" [disabled]="!cityName">
+        <mat-icon *ngIf="!isLoadingAdd">add</mat-icon>
+        <mat-spinner *ngIf="isLoadingAdd" diameter="20"></mat-spinner>
+      </button>
+
+      <span *ngIf="errorMessage" class="error-message">{{ errorMessage }}</span>
+
+      <hr class="divider">
+
+      <div class="recent-locations">
+        <h3>Recent Locations</h3>
+        <hr class="divider">
+        <ul>
+          <li *ngFor="let location of recentLocations;let i = index" class="location-item">
+            <div class="location-info">
+              <div class="location-details" (click)="getForecast(location.name)">
+                <p>{{ location.name }}</p>
+                <p class="temperature">{{ location.temperature ? location.temperature + '°C' : 'Loading...' }}</p>
+                <p>{{ location.weather }} </p>
+                <img *ngIf="location.weatherIcon" 
+                      [src]="'assets/weather-icons/' + location.weatherIcon + '.svg'" 
+                      alt="Weather Icon"
+                      class="weather-icon">
+              </div>
+              <div class="buttons-container">
+                  <button mat-icon-button class="refresh-button" (click)="refreshCity(location.name)">
+                    <mat-icon>refresh</mat-icon>
+                    <!-- <mat-spinner *ngIf="isLoadingRefresh" diameter="20"></mat-spinner> -->
+                  </button>
+                  <button mat-icon-button class="delete-button" (click)="deleteCity(i)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+              </div>
+             </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Clear button to remove all locations -->
+      <button (click)="clearLocations()" class="clear-button">Clear</button>
+    </div>
+
+    <div *ngIf="selectedCity"  class="right-panel">
+      <div class="header-row">
+        <div class="selected-city">{{ selectedCity }}</div>
+        <button mat-icon-button (click)="refreshForecast()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+
+      <div *ngIf="firstForecast" class="first-forecast">
+        <h3>Today's Weather</h3>
+        <div class="forecast-panel">
+          <div class="icon">
+            <img *ngIf="firstForecast.weatherIcon" 
+                      [src]="'assets/weather-icons/' + firstForecast.weatherIcon + '.svg'" 
+                      alt="Weather Icon"
+                      class="today-weather-icon">
+          </div>
+          <div class="details">
+            <p>{{ firstForecast.main.temp }}°C</p>
+            <p>{{ firstForecast.weather[0].description }}</p>
+            <p>{{ firstForecast.wind.speed }} m/s {{firstForecast.wind.deg}} deg</p>
+            <p>{{ firstForecast.main.pressure }}</p>
+          </div>
+      </div>
+      </div>
+      <div class="daily-forecasts">
+        <!-- <h3>Daily Forecasts (Next 4 Days)</h3> -->
+        <div *ngFor="let forecast of dailyForecasts" class="forecast-card">
+          <p>{{ forecast.date | date: 'd' }}</p>
+          <p>{{ forecast.date | date: 'EEE' }}</p>
+          <img 
+              [src]="'assets/weather-icons/' + forecast.weatherIcon + '.svg'" 
+              alt="Weather Icon"
+              class="weather-icon">
+          <p>{{ forecast.temperature }}°C</p>
+          <!-- <p>Weather: {{ forecast.weather[0].description }}</p> -->
+        </div>
+      </div>
+    </div>
+</div>

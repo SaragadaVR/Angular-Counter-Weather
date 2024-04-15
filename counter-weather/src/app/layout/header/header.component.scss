@@ -1,0 +1,36 @@
+header {
+    background-color: #333;
+    padding: 10px;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav ul li {
+    display: inline;
+    margin-right: 10px;
+  }
+  
+  nav ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .counter-length {
+    background-color: grey;
+    display: inline-block;
+    padding: 0px 20px;
+    font-size: 18px;
+    border-radius: 20px;
+    color: white;
+  }
+
+  .header-link {
+    flex: 1;
+    text-align: center;
+    color: #000;
+    font-size: 18px;
+  }

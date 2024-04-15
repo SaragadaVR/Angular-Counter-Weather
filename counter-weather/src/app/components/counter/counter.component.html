@@ -1,0 +1,12 @@
+<div class="button-container">
+    <button mat-button color="primary" class="action-button" (click)="resetCounters()">Reset</button>
+    <button mat-button color="primary" class="action-button" (click)="addCounterRow()">Add</button>
+</div>
+
+
+<div *ngFor="let row of rows; let i = index" class="counter-button-container">
+    <span class="row-counter-length">{{ counters[i] }}</span>
+    <button mat-button class="increment-button" (click)="incrementCounter(i)">Increment</button>
+    <button mat-button class="decrement-button" (click)="decrementCounter(i)">Decrement</button>
+    <button mat-button class="delete" (click)="deleteRow(i)">Delete</button>
+</div>
